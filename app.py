@@ -26,8 +26,6 @@ async def read_root(request: Request):
 async def convert_markdown(file: UploadFile):
     unique_id = uuid4()
     temp_dir = f"./temp/{unique_id}"
-
-    shutil.os.makedirs(temp_dir, exist_ok=True)
     
     os.makedirs(temp_dir, exist_ok=True)
     os.chmod(temp_dir, 0o777)  # 设置目录权限
