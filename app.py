@@ -1,11 +1,25 @@
+from fastapi import FastAPI, UploadFile
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+from fastapi.responses import HTMLResponse
+from fastapi import Request
 import shutil
 from markitdown import MarkItDown
-from fastapi import FastAPI, UploadFile
 from uuid import uuid4
 
 md = MarkItDown()
 
 app = FastAPI()
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+templates = Jinja2Templates(directory="templates")
+
+
+@app.get("/", response_class=HTMLResponse)
+async def read_root(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
+
 
 @app.post("/convert")
 async def convert_markdown(file: UploadFile):
