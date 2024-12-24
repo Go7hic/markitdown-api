@@ -26,10 +26,7 @@ async def read_root(request: Request):
 async def convert_markdown(file: UploadFile):
     unique_id = uuid4()
     temp_dir = f"./temp/{unique_id}"
-    
-    os.makedirs(temp_dir, exist_ok=True)
-    os.chmod(temp_dir, 0o777)  # 设置目录权限
-        
+    os.makedirs(temp_dir, exist_ok=True, mode=0o777)    
     file_path = f"{temp_dir}/{file.filename}"
     with open(file_path, "wb") as f:
         shutil.copyfileobj(file.file, f)
