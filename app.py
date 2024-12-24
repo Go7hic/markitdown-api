@@ -6,6 +6,7 @@ from fastapi import Request
 import shutil
 from markitdown import MarkItDown
 from uuid import uuid4
+import os
 
 md = MarkItDown()
 
@@ -27,7 +28,10 @@ async def convert_markdown(file: UploadFile):
     temp_dir = f"./temp/{unique_id}"
 
     shutil.os.makedirs(temp_dir, exist_ok=True)
-
+    
+    os.makedirs(temp_dir, exist_ok=True)
+    os.chmod(temp_dir, 0o777)  # 设置目录权限
+        
     file_path = f"{temp_dir}/{file.filename}"
     with open(file_path, "wb") as f:
         shutil.copyfileobj(file.file, f)
