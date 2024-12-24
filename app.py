@@ -1,15 +1,25 @@
-from typing import Union
+import shutil
+from markitdown import MarkItDown
+from fastapi import FastAPI, UploadFile
+from uuid import uuid4
 
-from fastapi import FastAPI
+md = MarkItDown()
 
 app = FastAPI()
 
+@app.post("/convert")
+async def convert_markdown(file: UploadFile):
+    unique_id = uuid4()
+    temp_dir = f"./temp/{unique_id}"
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+    shutil.os.makedirs(temp_dir, exist_ok=True)
 
+    file_path = f"{temp_dir}/{file.filename}"
+    with open(file_path, "wb") as f:
+        shutil.copyfileobj(file.file, f)
+    result = md.convert(file_path)
+    content = result.text_content
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
+    shutil.rmtree(temp_dir)
+
+    return {"result": content}
