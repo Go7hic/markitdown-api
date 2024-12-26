@@ -1,5 +1,5 @@
 # app/api/routes.py
-from fastapi import APIRouter, UploadFile, File, HTTPException
+from fastapi import APIRouter, UploadFile, Header, File, HTTPException
 from markitdown import MarkItDown
 import tempfile
 import os
@@ -10,19 +10,12 @@ router = APIRouter()
 MAX_FILE_SIZE = 25 * 1024 * 1024  # 25MB in bytes
 
 @router.post("/convert")
-async def convert_file(file: UploadFile = File(...)):
+async def convert_file(file: UploadFile = File(...),content_length: int = Header(None, lt=MAX_FILE_SIZE)):
     """
     Convert an uploaded file to Markdown format
     """
-    print(f"Received file: {file.filename}")  # 添加日志
-    
-    # 文件大小限制
     content = await file.read()
-    if len(content) > MAX_FILE_SIZE:
-        raise HTTPException(
-            status_code=413,  # Payload Too Large
-            detail=f"File size exceeds the limit of {MAX_FILE_SIZE/1024/1024}MB"
-        )
+  
     # 创建临时文件保存上传的内容
     with tempfile.NamedTemporaryFile(delete=False) as temp_file:
         content = await file.read()
