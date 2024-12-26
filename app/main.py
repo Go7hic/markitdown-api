@@ -11,10 +11,10 @@ app = FastAPI(
 )
 
 # 添加速率限制中间件
-# app.add_middleware(
-#     RateLimitMiddleware,
-#     requests_per_minute=10
-# )
+app.add_middleware(
+    RateLimitMiddleware,
+    requests_per_minute=10
+)
 
 # Configure CORS
 app.add_middleware(

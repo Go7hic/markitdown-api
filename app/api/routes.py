@@ -16,15 +16,13 @@ async def convert_file(file: UploadFile = File(...)):
     """
     print(f"Received file: {file.filename}")  # 添加日志
     
-    # file_size = 0
-    # content = await file.read()
-    # file_size = len(content)
-    
-    # if file_size > MAX_FILE_SIZE:
-    #     raise HTTPException(
-    #         status_code=413,
-    #         detail=f"File size exceeds the {MAX_FILE_SIZE/1024/1024}MB limit"
-    #     )
+    # 文件大小限制
+    content = await file.read()
+    if len(content) > MAX_FILE_SIZE:
+        raise HTTPException(
+            status_code=413,  # Payload Too Large
+            detail=f"File size exceeds the limit of {MAX_FILE_SIZE/1024/1024}MB"
+        )
     # 创建临时文件保存上传的内容
     with tempfile.NamedTemporaryFile(delete=False) as temp_file:
         content = await file.read()
