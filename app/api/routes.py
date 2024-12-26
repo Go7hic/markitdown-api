@@ -14,6 +14,8 @@ async def convert_file(file: UploadFile = File(...)):
     """
     Convert an uploaded file to Markdown format
     """
+    print(f"Received file: {file.filename}")  # 添加日志
+    
     file_size = 0
     content = await file.read()
     file_size = len(content)
@@ -33,9 +35,11 @@ async def convert_file(file: UploadFile = File(...)):
             # 使用 MarkItDown 转换
             md = MarkItDown()
             result = md.convert(temp_file.name)
-            
+            print(f"Conversion successful for: {file.filename}")  # 添加日志
+                
             return {"markdown": result}
         except Exception as e:
+            print(f"Conversion error: {str(e)}")  # 添加日志
             raise HTTPException(status_code=400, detail=str(e))
         finally:
             os.unlink(temp_file.name)
