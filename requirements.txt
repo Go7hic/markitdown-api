@@ -1,5 +1,11 @@
-fastapi==0.115.0
-uvicorn[standard]==0.30.6
+fastapi==0.109.0
+uvicorn==0.27.0
+python-multipart==0.0.6
 markitdown==0.0.1a3
-jinja2
-python-multipart
+pydantic==2.10.4
+python-dotenv==1.0.0
+pytest==7.4.4
+httpx==0.26.0
+python-jose==3.3.0
+passlib==1.7.4
+uvicorn[standard]==0.30.6
