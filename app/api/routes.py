@@ -14,7 +14,6 @@ async def convert_file(file: UploadFile = File(...),content_length: int = Header
     """
     Convert an uploaded file to Markdown format
     """
-    content = await file.read()
   
     # 创建临时文件保存上传的内容
     with tempfile.NamedTemporaryFile(delete=False) as temp_file:
