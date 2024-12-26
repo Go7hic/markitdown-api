@@ -19,7 +19,7 @@ app = FastAPI(
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "https://markitdown.up.railway.app"],  # Vite 开发服务器的地址
+    allow_origins=["http://localhost:5173", "https://markitdown.up.railway.app", "https://www.markitdown.tools", "https://markitdown.tools"],  # Vite 开发服务器的地址
     allow_methods=["*"],
     allow_headers=["*"],
 )
