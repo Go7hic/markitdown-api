@@ -1,14 +1,17 @@
 # app/middleware/rate_limit.py
 from fastapi import Request, HTTPException
-from typing import Dict, Tuple
+from typing import Dict, Tuple, Callable
 import time
+from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.responses import Response
 
-class RateLimitMiddleware:
-    def __init__(self, requests_per_minute: int = 10):
+class RateLimitMiddleware(BaseHTTPMiddleware):
+    def __init__(self, app, requests_per_minute: int = 10):
+        super().__init__(app)
         self.requests_per_minute = requests_per_minute
         self.requests: Dict[str, list] = {}
 
-    async def __call__(self, request: Request, call_next):
+    async def dispatch(self, request: Request, call_next) -> Response:
         # 获取客户端 IP
         client_ip = request.client.host
         current_time = time.time()

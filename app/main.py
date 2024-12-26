@@ -10,12 +10,11 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# origins = [
-#     "http://localhost:5173",    # Vite 开发服务器默认端口
-#     "http://localhost:4173",    # Vite 预览端口
-#     "http://127.0.0.1:5173",
-#     "http://127.0.0.1:4173",
-# ]
+# 添加速率限制中间件
+app.add_middleware(
+    RateLimitMiddleware,
+    requests_per_minute=10
+)
 
 # Configure CORS
 app.add_middleware(
@@ -25,8 +24,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-# 添加速率限制中间件
-app.add_middleware(RateLimitMiddleware, requests_per_minute=10)
 
 # Include API routes
 app.include_router(api_router, prefix="/api")
