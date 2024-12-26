@@ -1,4 +1,5 @@
 # app/main.py
+from app.middleware.rate_limit import RateLimitMiddleware
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.api.routes import router as api_router
@@ -23,6 +24,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+# 添加速率限制中间件
+app.add_middleware(RateLimitMiddleware, requests_per_minute=10)
 
 # Include API routes
 app.include_router(api_router, prefix="/api")
