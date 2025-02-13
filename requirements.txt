@@ -1,6 +1,6 @@
 fastapi
 python-multipart
-markitdown==0.0.1a3
+markitdown==0.0.1a4
 pydantic
 python-dotenv
 pytest
