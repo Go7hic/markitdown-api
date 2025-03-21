@@ -1,15 +1,15 @@
 # markitdown-api
 
-基于 Fastapi 开发的 MarkItDown API 服务
+A MarkItDown API service built with FastAPI
 
-## 部署
+## Deployment
 
-可以直在 Railway 上面部署使用
+You can deploy it directly on Railway
 
-> 可能需要设置适合你的 `MAX_FILE_SIZE` 
+> You may need to set a suitable `MAX_FILE_SIZE` for your needs
 
 
-## 客户端使用
+## Client Usage
 
 ```js
 const formData = new FormData();
