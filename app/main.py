@@ -19,7 +19,7 @@ app.add_middleware(
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "https://markitdown.up.railway.app", "https://www.markitdown.tools", "https://markitdown.tools"],  # Vite 开发服务器的地址
+    allow_origins=["*"],  # TODO 限制为白名单
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

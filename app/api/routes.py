@@ -7,7 +7,7 @@ import os
 router = APIRouter()
 
 # 设置文件大小限制（25MB）
-MAX_FILE_SIZE = 100 * 1024 * 1024  # 25MB in bytes
+MAX_FILE_SIZE = 25 * 1024 * 1024  # 25MB in bytes
 
 @router.post("/convert")
 async def convert_file(file: UploadFile = File(...),content_length: int = Header(None, lt=MAX_FILE_SIZE)):
